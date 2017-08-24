@@ -479,8 +479,8 @@ class multiTV
                             $hasthumb = ' hasthumb';
                             break;
                         case 'date':
-                            $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'inline mtv_' . $fieldname, $default);
-                            $tvcss .= '.multitv #[+tvid+]list li.element .inline.mtv_' . $fieldname . ' { margin-right: -26px }';
+                            $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'inline mtv_date mtv_' . $fieldname, $default);
+                            $tvcss .= '.multitv #[+tvid+]list li.element .inline.mtv_' . $fieldname . ' { margin-right: -21px }';
                             break;
                         default:
                             $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'inline mtv_' . $fieldname, $default);
