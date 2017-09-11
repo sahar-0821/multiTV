@@ -57,7 +57,7 @@ $language['datepicker.dayNamesShort'] = '["Dom", "Lun", "Mar", "Mer", "Gio", "Ve
 $language['datepicker.dayNamesMin'] = '["Do", "Lu", "Ma", "Me", "Gi", "Ve", "Sa"]';
 $language['datepicker.dateFormat'] = 'dd/mm/yy';
 $language['datepicker.firstDay'] = '0';
-$language['datepicker.isRTL'] = 'falso';
+$language['datepicker.isRTL'] = 'false';
 
 $language['modulename'] = 'Database Manager';
 $language['reload'] = 'Ricarica';
