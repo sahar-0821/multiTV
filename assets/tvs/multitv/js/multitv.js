@@ -182,6 +182,9 @@
                         $(this).val('');
                 }
             });
+
+            clone.find('.inlineTabEditor.initialized').removeClass('initialized');
+
             return clone;
         },
         saveMultiValue: function () {
@@ -270,39 +273,7 @@
                     $(this).removeAttr('style');
                 });
 
-                //Dmi3yy add inline tinyMCE
-                    if (typeof tinyMCE !== 'undefined') {
-                        $('.inlineTabEditor', _this.fieldEditArea).each(function () {
-                            var editorId = $(this).attr('id');
-                            var theme = $(this).data('theme');
-                            if (tinyMCE.majorVersion == 4) {
-                                if (modxRTEbridge_tinymce4 != undefined) {
-                                    var configObj = theme != undefined ? window['config_tinymce4_'+theme] : window[modxRTEbridge_tinymce4.default];
-                                    configObj['selector'] = '#' + editorId;
-                                    configObj['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
-                                    tinyMCE.init(configObj);
-                                } else {
-                                    tinyMCE.execCommand('mceAddEditor', false, editorId);
-                                }
-                            } else {
-                                tinyMCE.execCommand('mceAddControl', false, editorId);
-                            }
-                            tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_ifr'), 'height', '200px');
-                            tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_tbl'), 'height', 'auto');
-                            tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_ifr'), 'width', '100%');
-                            tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_tbl'), 'width', '100%');
-                        });
-                    } else if (typeof CKEDITOR !== 'undefined' && CKEDITOR.version.substr(0,1) == 4) {
-                        $('.inlineTabEditor', _this.fieldEditArea).each(function () {
-                            var editorId = $(this).attr('id');
-                            var theme = $(this).data('theme');
-                            var configObj = theme != undefined ? window['config_ckeditor4_'+theme] : window[modxRTEbridge_ckeditor4.default];
-                            CKEDITOR.replace(editorId, configObj);
-                        });
-                    }
-            //Dmi3yy add inline tinyMCE
-
-
+                _this.initRichtext(clone, _this);
                 _this.saveMultiValue();
                 _this.fieldListCounter++;
             });
@@ -318,7 +289,9 @@
                     // clear inputs/textarea if only one element is present
                     var inputs = $('[name]', $(this).parent());
                     inputs.each(function () {
-                        var type = $(this).attr('type');
+                        var self = $(this),
+                            type = self.attr('type');
+
                         switch (type) {
                             case 'button':
                                 break;
@@ -328,46 +301,29 @@
                                 break;
                             case 'checkbox':
                             case 'radio':
-                                $(this).prop('checked', false);
+                                self.prop('checked', false);
                                 break;
-                            default:
-                                $(this).val('');
+                            default: {
+                                if (this.type == 'textarea' && self.hasClass('mtv_richtext')) {
+                                    tinyMCE.get(self.attr('id')).setContent('');
+                                    break;
+                                }
+
+                                self.val('');
+                            }
                         }
                     });
                     $('.mtvThumb', $(this).parent()).html('');
+
+                    _this.data.value = [];
+
+                    _this.$el.setValue($.toJSON({
+                        fieldValue:    _this.data.value,
+                        fieldSettings: _this.data.settings
+                    }));
                 }
             });
-            //Dmi3yy add inline tinyMCE
-            if (typeof tinyMCE !== 'undefined' && this.options.mode == 'vertical' ) {
-                $('.inlineTabEditor', _this.fieldList).each(function () {
-                    var editorId = $(this).attr('id');
-                    var theme = $(this).data('theme');
-                    if (tinyMCE.majorVersion == 4) {
-                        if (modxRTEbridge_tinymce4 != undefined) {
-
-                            var configObj = theme != undefined ? window['config_tinymce4_'+theme] : window[modxRTEbridge_tinymce4.default];
-                            configObj['selector'] = '#' + editorId;
-                            configObj['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
-                            tinyMCE.init(configObj);
-                        } else {
-                            tinyMCE.execCommand('mceAddEditor', false, editorId);
-                        }
-                    } else {
-                        tinyMCE.execCommand('mceAddControl', false, editorId);
-                    }
-                    tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_ifr'), 'height', '200px');
-                    tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_tbl'), 'height', 'auto');
-                    tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_ifr'), 'width', '100%');
-                    tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_tbl'), 'width', '100%');
-                });
-            } else if (typeof CKEDITOR !== 'undefined' && CKEDITOR.version.substr(0,1) == 4) {
-                $('.inlineTabEditor', _this.fieldList).each(function () {
-                    var editorId = $(this).attr('id');
-                    var theme = $(this).data('theme');
-                    var configObj = theme != undefined ? window['config_ckeditor4_'+theme] : window[modxRTEbridge_ckeditor4.default];
-                    CKEDITOR.replace(editorId, configObj);
-                });
-            }
+            
 
             // change field
             $('[name]', el).bind('change keyup', function (e) {
@@ -400,7 +356,10 @@
                 }
                 $.each(_this.data.value, function () {
                     var values = this;
+
                     if (_this.fieldListCounter === 1) {
+                        var clone = _this.fieldListElement;
+
                         $.each(values, function (key, value) {
                             var fieldName = (typeof key === 'number') ? _this.fieldNames[key] : key;
                             var fieldInput = $('[name^="' + _this.tvid + fieldName + '_mtv"][type!="hidden"]', _this.fieldListElement);
@@ -420,6 +379,7 @@
                         var clone = _this.duplicateElement(_this.fieldListElementEmpty, _this.fieldListCounter);
                         clone.show();
                         _this.fieldList.append(clone);
+
                         $.each(values, function (key, value) {
                             var fieldName = (typeof key === 'number') ? _this.fieldNames[key] : key;
                             var fieldInput = $('[name^="' + _this.tvid + fieldName + '_mtv"][type!="hidden"]', clone);
@@ -436,10 +396,47 @@
                             }
                         });
                     }
+
                     _this.fieldListCounter++;
                 });
             }
 
+            _this.initRichtext(_this.fieldList, _this);
+        },
+        initRichtext: function(el, _this) {
+            //Dmi3yy add inline tinyMCE
+            if (typeof tinyMCE !== 'undefined' && _this.options.mode == 'vertical' ) {
+                $('.inlineTabEditor:not(.initialized)', el).each(function () {
+                    $(this).addClass('initialized');
+                    var editorId = $(this).attr('id');
+                    var theme = $(this).data('theme');
+                    if (tinyMCE.majorVersion == 4) {
+                        if (modxRTEbridge_tinymce4 != undefined) {
+
+                            var configObj = theme != undefined ? window['config_tinymce4_'+theme] : window[modxRTEbridge_tinymce4.default];
+                            configObj['selector'] = '#' + editorId;
+                            configObj['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
+                            tinyMCE.init(configObj);
+                        } else {
+                            tinyMCE.execCommand('mceAddEditor', false, editorId);
+                        }
+                    } else {
+                        tinyMCE.execCommand('mceAddControl', false, editorId);
+                    }
+                    tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_ifr'), 'height', '200px');
+                    tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_tbl'), 'height', 'auto');
+                    tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_ifr'), 'width', '100%');
+                    tinyMCE.DOM.setStyle(tinyMCE.DOM.get(editorId + '_tbl'), 'width', '100%');
+                });
+            } else if (typeof CKEDITOR !== 'undefined' && CKEDITOR.version.substr(0,1) == 4) {
+                $('.inlineTabEditor:not(.initialized)', el).each(function () {
+                    $(this).addClass('initialized');
+                    var editorId = $(this).attr('id');
+                    var theme = $(this).data('theme');
+                    var configObj = theme != undefined ? window['config_ckeditor4_'+theme] : window[modxRTEbridge_ckeditor4.default];
+                    CKEDITOR.replace(editorId, configObj);
+                });
+            }
         },
         clear: function () {
             if (confirm(this.options.language.confirmclear)) {
