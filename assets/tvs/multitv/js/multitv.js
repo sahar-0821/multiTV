@@ -289,7 +289,9 @@
                     // clear inputs/textarea if only one element is present
                     var inputs = $('[name]', $(this).parent());
                     inputs.each(function () {
-                        var type = $(this).attr('type');
+                        var self = $(this),
+                            type = self.attr('type');
+
                         switch (type) {
                             case 'button':
                                 break;
@@ -299,10 +301,16 @@
                                 break;
                             case 'checkbox':
                             case 'radio':
-                                $(this).prop('checked', false);
+                                self.prop('checked', false);
                                 break;
-                            default:
-                                $(this).val('');
+                            default: {
+                                if (this.type == 'textarea' && self.hasClass('mtv_richtext')) {
+                                    tinyMCE.get(self.attr('id')).setContent('');
+                                    break;
+                                }
+
+                                self.val('');
+                            }
                         }
                     });
                     $('.mtvThumb', $(this).parent()).html('');
