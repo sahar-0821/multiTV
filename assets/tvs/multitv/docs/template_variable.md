@@ -13,14 +13,16 @@ The fields of the multitv could be defined in the key `fields`. This key contain
 Property | Description | Default
 -------- | ----------- | -------
 caption | Caption (horizontal) or label (vertical) for the input | -
-type | Type of the input (could be set to almost all MODX input types[^1] and `thumb` for thumbnail display of image tvs[^2]) | text
+type | Type of the input (could be set to almost all MODX input types[^1], `thumb` for thumbnail display of image tvs[^2] or `richtext` for a richtext field with TinyMCE) | text
 elements | Same options as in the *input option values* of a [MODX template variable](http://rtfm.modx.com/evolution/1.0/developers-guide/template-variables/creating-a-template-variable) are possible i.e. for a dropdown with all documents in the MODX root: ``@SELECT `pagetitle`, `id` FROM `modx_site_content` WHERE parent = 0 ORDER BY `menuindex` ASC`` | -
 default | Default value for the input. This value could contain calculated parts. There are two placeholders available: `{i}` contains an autoincremented index `{alias}` contains the alias of the edited document. | -
 thumbof | Name of an image input. A thumbnail of the selected image will be rendered into this area | -
 width | Width of the input | 100
+theme | Theme[^3] for TinyMCE if type is richtext | -
 
 [^1]: Supported MODX input types: text, rawtext, email, number, textareamini, textarea, rawtextarea, htmlarea, date, dropdown, listbox, listbox-multiple, checkbox, option, image, file
 [^2]: See [images config](https://github.com/Jako/multiTV/blob/master/assets/tvs/multitv/configs/images.config.inc.php) for thumb
+[^3]: Themes in the theme directory: advanced, base, creative, custom, editor, full, inline, introtext, legacy, logic,mini, simple, webuser
 
 In datatable mode a layer will be displayed during adding/editing one row. In this editing layer the MODX input type richtext is possible.
 
