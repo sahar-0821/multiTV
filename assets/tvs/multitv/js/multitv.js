@@ -306,6 +306,13 @@
                         }
                     });
                     $('.mtvThumb', $(this).parent()).html('');
+
+                    _this.data.value = [];
+
+                    _this.$el.setValue($.toJSON({
+                        fieldValue:    _this.data.value,
+                        fieldSettings: _this.data.settings
+                    }));
                 }
             });
             
