@@ -362,6 +362,9 @@ class multiTV
             case 'url' :
                 $fieldType = 'text';
                 break;
+            case 'color' :
+                $fieldType = 'text';
+                break;
             case 'unixtime' :
                 $fieldType = 'date';
                 break;
@@ -482,6 +485,9 @@ class multiTV
                             $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'inline mtv_date mtv_' . $fieldname, $default);
                             $tvcss .= '.multitv #[+tvid+]list li.element .inline.mtv_' . $fieldname . ' { margin-right: -21px }';
                             break;
+                        case 'color':
+                            $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'inline jscolor mtv_' . $fieldname, $default);
+                            break;
                         default:
                             $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'inline mtv_' . $fieldname, $default);
                     }
@@ -508,6 +514,10 @@ class multiTV
                             $tvelement[] = '<div class="mtvThumb" id="' . $tvid . $this->fields[$fieldname]['thumbof'] . '_mtvpreview"></div>';
                             $hasthumb = ' hasthumb';
                             break;
+                        case 'color':
+                            $tvelement[] = '<label for="' . $tvid . $fieldname . '">' . $this->fields[$fieldname]['caption'] . '</label>';
+                            $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'jscolor mtv_' . $fieldname, $default) . '<br />';
+                            break;
                         default:
                             $tvelement[] = '<label for="' . $tvid . $fieldname . '">' . $this->fields[$fieldname]['caption'] . '</label>';
                             $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'mtv_' . $fieldname, $default) . '<br />';
@@ -530,6 +540,10 @@ class multiTV
                         case 'thumb':
                             $tvelement[] = '<div class="mtvThumb" id="' . $tvid . $this->fields[$fieldname]['thumbof'] . '_mtvpreview"></div>';
                             $hasthumb = ' hasthumb';
+                            break;
+                        case 'color':
+                            $tvelement[] = '<label for="' . $tvid . $fieldname . '">' . $this->fields[$fieldname]['caption'] . '</label>';
+                            $tvelement[] = $this->renderMultiTVFormElement($type, $fieldname, $elements, 'jscolor mtv_' . $fieldname, $default) . '<br />';
                             break;
                         default:
                             $tvelement[] = '<label for="' . $tvid . $fieldname . '">' . $this->fields[$fieldname]['caption'] . '</label>';
@@ -599,6 +613,10 @@ class multiTV
                         switch ($type) {
                             case 'thumb':
                                 $tvElements[] = '<div class="mtvThumb" id="' . $tvid . $this->fields[$fieldname]['thumbof'] . '_mtvpreview"></div>';
+                                break;
+                            case 'color':
+                                $tvelement[] = '<label for="' . $tvid . $fieldname . '">' . $caption . '</label>'.
+                                $this->renderMultiTVFormElement($type, $fieldname, $elements, 'jscolor mtv_' . $fieldname, $default) . "\r\n";
                                 break;
                             default:
                                 $tvElements[] = '<label for="' . $tvid . $fieldname . '">' . $caption . '</label>' .
@@ -778,6 +796,10 @@ class multiTV
                 switch ($type) {
                     case 'thumb':
                         $tvElements[] = '<div class="mtvThumb" id="' . $config['table'] . $this->fields[$fieldname]['thumbof'] . '_mtvpreview"></div>';
+                        break;
+                    case 'color':
+                        $tvElements[] = '<label for="' . $config['table'] . $fieldname . '_mtv">' . $caption . '</label>' .
+                        $this->renderMultiTVFormElement($type, $fieldname, $elements, 'jscolor mtv_' . $fieldname, $default) . "\r\n";
                         break;
                     default:
                         $tvElements[] = '<label for="' . $config['table'] . $fieldname . '_mtv">' . $caption . '</label>' .

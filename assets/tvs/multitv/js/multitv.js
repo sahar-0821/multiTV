@@ -258,6 +258,27 @@
                 BrowseFileServer(field);
             });
 
+            //color
+            $('.jscolor', el).ColorPicker({
+      					onSubmit: function(hsb, hex, rgb, el) {
+      						$(el).val(hex);
+      						$(el).attr("value",hex);
+
+      						var color = '#' +hex+'!important';
+                  $(el).attr('style', 'background-color: '+color);
+      						$(el).ColorPickerHide();
+      						$(el).val(hex);
+      						$(el).attr("value",hex);
+      						$(el).change();
+      					},
+      					onBeforeShow: function () {
+      					  $(this).ColorPickerSetColor(this.value);
+      					 }
+      					})
+      			.bind('keyup', function(){
+      			    $(this).ColorPickerSetColor(this.value);
+      			});
+
             // image field browser
             $('.browseimage', el).click(function (e) {
                 e.preventDefault();
@@ -958,6 +979,27 @@
                 BrowseFileServer(field);
                 return false;
             });
+            
+            //color
+            $('.jscolor', el).ColorPicker({
+      					onSubmit: function(hsb, hex, rgb, el) {
+      						$(el).val(hex);
+      						$(el).attr("value",hex);
+
+      						var color = '#' +hex+'!important';
+                  $(el).attr('style', 'background-color: '+color);
+      						$(el).ColorPickerHide();
+      						$(el).val(hex);
+      						$(el).attr("value",hex);
+      						$(el).change();
+      					},
+      					onBeforeShow: function () {
+      					  $(this).ColorPickerSetColor(this.value);
+      					 }
+      					})
+      			.bind('keyup', function(){
+      			    $(this).ColorPickerSetColor(this.value);
+      			});
 
             // image field browser
             $('.browseimage', el).click(function () {
