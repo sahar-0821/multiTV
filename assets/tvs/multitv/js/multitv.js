@@ -405,7 +405,7 @@
         },
         initRichtext: function(el, _this) {
             //Dmi3yy add inline tinyMCE
-            if (typeof tinyMCE !== 'undefined' && _this.options.mode == 'vertical' ) {
+            if (typeof tinyMCE !== 'undefined' && (_this.options.mode == 'vertical' || _this.options.mode == 'single') ) {
                 $('.inlineTabEditor:not(.initialized)', el).each(function () {
                     $(this).addClass('initialized');
                     var editorId = $(this).attr('id');
