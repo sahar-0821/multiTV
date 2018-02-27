@@ -82,6 +82,7 @@ $params['paginate'] = (isset($paginate) && $paginate) ? true : false;
 $params['offsetKey'] = (isset($offsetKey)) ? $offsetKey : 'page';
 $params['offset'] = ($params['paginate'] && ($params['display'] != 'all') && isset($_GET[$params['offsetKey']])) ? (intval($_GET[$params['offsetKey']]) - 1) * $params['display'] : $params['offset'];
 $params['where'] = isset($where) ? json_decode($where, true) : false;
+$params['iterationStart'] = (isset($iterationStart)) ? $iterationStart : 1;
 
 if (!empty($fromJson)) {
     $tvOutput = json_decode($fromJson, true);
