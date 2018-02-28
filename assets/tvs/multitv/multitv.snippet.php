@@ -62,7 +62,7 @@ $params['emptyOutput'] = (isset($emptyOutput) && !$emptyOutput) ? false : true;
 $params['noResults'] = (isset($noResults)) ? $noResults : '';
 $params['rowTpl'] = (isset($rowTpl)) ? $rowTpl : (isset($templates['rowTpl']) ? '@CODE:' . $templates['rowTpl'] : '@CODE:<option value="[+value+]">[+key+]</option>');
 $params['display'] = (isset($display)) ? $display : 5;
-$params['offset'] = (isset($offset)) ? intval($offset) : 0;
+$params['offset'] = (isset($offset)) ? (int)$offset : 0;
 $params['rows'] = (isset($rows) && ($rows != 'all')) ? explode(',', $rows) : 'all';
 $params['toPlaceholder'] = (isset($toPlaceholder) && $toPlaceholder != '') ? $toPlaceholder : false;
 $params['toJson'] = (isset($toJson) && $toJson != '') ? $toJson : false;
@@ -80,8 +80,9 @@ $params['evenClass'] = (isset($evenClass)) ? $evenClass : '';
 $params['oddClass'] = (isset($oddClass)) ? $oddClass : '';
 $params['paginate'] = (isset($paginate) && $paginate) ? true : false;
 $params['offsetKey'] = (isset($offsetKey)) ? $offsetKey : 'page';
-$params['offset'] = ($params['paginate'] && ($params['display'] != 'all') && isset($_GET[$params['offsetKey']])) ? (intval($_GET[$params['offsetKey']]) - 1) * $params['display'] : $params['offset'];
+$params['offset'] = ($params['paginate'] && ($params['display'] != 'all') && isset($_GET[$params['offsetKey']])) ? ((int)$_GET[$params['offsetKey']] - 1) * $params['display'] : $params['offset'];
 $params['where'] = isset($where) ? json_decode($where, true) : false;
+$params['iterationStart'] = (isset($iterationStart)) ? (int)$iterationStart : 1;
 
 if (!empty($fromJson)) {
     $tvOutput = json_decode($fromJson, true);

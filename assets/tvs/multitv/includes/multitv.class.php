@@ -1080,7 +1080,8 @@ class multiTV
 
         // output
         $wrapper = array();
-        $i = $iteration = 1;
+        $i = 1;
+        $iteration = $params['iterationStart'];
         $classes = array($params['firstClass']);
         // rowTpl output
         foreach ($tvOutput as $value) {
