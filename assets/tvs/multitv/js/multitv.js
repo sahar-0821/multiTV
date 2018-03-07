@@ -236,6 +236,18 @@
                 _this.data.settings.autoincrement = 1;
             }
         },
+        updateColor: function(el, value, hide) {
+            el.val(value).attr('value',value);
+
+            var color = '#' + value + '!important';
+            el.attr('style', 'background-color: ' + color);
+
+            if (hide === true) {
+                el.ColorPickerHide();
+            }
+
+            el.val(value).attr('value', value).change();
+        },
         addElementEvents: function (el) {
             var _this = this;
 
@@ -260,24 +272,19 @@
 
             //color
             $('.jscolor', el).ColorPicker({
-      					onSubmit: function(hsb, hex, rgb, el) {
-      						$(el).val(hex);
-      						$(el).attr("value",hex);
-
-      						var color = '#' +hex+'!important';
-                  $(el).attr('style', 'background-color: '+color);
-      						$(el).ColorPickerHide();
-      						$(el).val(hex);
-      						$(el).attr("value",hex);
-      						$(el).change();
-      					},
-      					onBeforeShow: function () {
-      					  $(this).ColorPickerSetColor(this.value);
-      					 }
-      					})
-      			.bind('keyup', function(){
-      			    $(this).ColorPickerSetColor(this.value);
-      			});
+                    onSubmit: function(hsb, hex, rgb, el) {
+                        _this.updateColor($(el), hex, true);
+                    },
+                    onChange: function(hsb, hex, rgb) {
+                        _this.updateColor($(this.data('colorpicker').el), hex);
+                    },
+                    onBeforeShow: function () {
+                        $(this).ColorPickerSetColor(this.value);
+                    }
+                })
+                .bind('keyup', function(){
+                    $(this).ColorPickerSetColor(this.value);
+                });
 
             // image field browser
             $('.browseimage', el).click(function (e) {
@@ -958,6 +965,18 @@
                 $(thumbId, el).html('');
             }
         },
+        updateColor: function(el, value, hide) {
+            el.val(value).attr('value',value);
+
+            var color = '#' + value + '!important';
+            el.attr('style', 'background-color: ' + color);
+
+            if (hide === true) {
+                el.ColorPickerHide();
+            }
+
+            el.val(value).attr('value', value).change();
+        },
         addElementEvents: function (el) {
             var _this = this;
 
@@ -982,24 +1001,19 @@
             
             //color
             $('.jscolor', el).ColorPicker({
-      					onSubmit: function(hsb, hex, rgb, el) {
-      						$(el).val(hex);
-      						$(el).attr("value",hex);
-
-      						var color = '#' +hex+'!important';
-                  $(el).attr('style', 'background-color: '+color);
-      						$(el).ColorPickerHide();
-      						$(el).val(hex);
-      						$(el).attr("value",hex);
-      						$(el).change();
-      					},
-      					onBeforeShow: function () {
-      					  $(this).ColorPickerSetColor(this.value);
-      					 }
-      					})
-      			.bind('keyup', function(){
-      			    $(this).ColorPickerSetColor(this.value);
-      			});
+                    onSubmit: function(hsb, hex, rgb, el) {
+                        _this.updateColor($(el), hex, true);
+                    },
+                    onChange: function(hsb, hex, rgb) {
+                        _this.updateColor($(this.data('colorpicker').el), hex);
+                    },
+                    onBeforeShow: function () {
+                        $(this).ColorPickerSetColor(this.value);
+                    }
+                })
+                .bind('keyup', function(){
+                    $(this).ColorPickerSetColor(this.value);
+                });
 
             // image field browser
             $('.browseimage', el).click(function () {
