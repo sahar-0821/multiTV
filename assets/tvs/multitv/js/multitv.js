@@ -236,6 +236,18 @@
                 _this.data.settings.autoincrement = 1;
             }
         },
+        updateColor: function(el, value, hide) {
+            el.val(value).attr('value',value);
+
+            var color = '#' + value + '!important';
+            el.attr('style', 'background-color: ' + color);
+
+            if (hide === true) {
+                el.ColorPickerHide();
+            }
+
+            el.val(value).attr('value', value).change();
+        },
         addElementEvents: function (el) {
             var _this = this;
 
@@ -257,6 +269,22 @@
                 var field = $(this).prev('input').attr('id');
                 BrowseFileServer(field);
             });
+
+            //color
+            $('.jscolor', el).ColorPicker({
+                    onSubmit: function(hsb, hex, rgb, el) {
+                        _this.updateColor($(el), hex, true);
+                    },
+                    onChange: function(hsb, hex, rgb) {
+                        _this.updateColor($(this.data('colorpicker').el), hex);
+                    },
+                    onBeforeShow: function () {
+                        $(this).ColorPickerSetColor(this.value);
+                    }
+                })
+                .bind('keyup', function(){
+                    $(this).ColorPickerSetColor(this.value);
+                });
 
             // image field browser
             $('.browseimage', el).click(function (e) {
@@ -937,6 +965,18 @@
                 $(thumbId, el).html('');
             }
         },
+        updateColor: function(el, value, hide) {
+            el.val(value).attr('value',value);
+
+            var color = '#' + value + '!important';
+            el.attr('style', 'background-color: ' + color);
+
+            if (hide === true) {
+                el.ColorPickerHide();
+            }
+
+            el.val(value).attr('value', value).change();
+        },
         addElementEvents: function (el) {
             var _this = this;
 
@@ -958,6 +998,22 @@
                 BrowseFileServer(field);
                 return false;
             });
+            
+            //color
+            $('.jscolor', el).ColorPicker({
+                    onSubmit: function(hsb, hex, rgb, el) {
+                        _this.updateColor($(el), hex, true);
+                    },
+                    onChange: function(hsb, hex, rgb) {
+                        _this.updateColor($(this.data('colorpicker').el), hex);
+                    },
+                    onBeforeShow: function () {
+                        $(this).ColorPickerSetColor(this.value);
+                    }
+                })
+                .bind('keyup', function(){
+                    $(this).ColorPickerSetColor(this.value);
+                });
 
             // image field browser
             $('.browseimage', el).click(function () {
