@@ -99,17 +99,20 @@
 .multitv table.display.hideHeader thead th { padding: 0 18px 0 10px; border-bottom: none }
 
 .tveditform { width: 590px }
-.tveditform .formtabpage label { display: block; margin-top: 10px; clear: left }
+.tveditform > h2 { padding-left: 10px; margin-top: 5px; margin-bottom: 15px; }
+.tveditform .formtabpage label { display: block; margin-top: 0.625rem; margin-bottom: 0.25rem; clear: left }
 .tveditform .formtabpage .inlinelabel { display: inline-block }
 .tveditform .formtabpage .mtvThumb { width: auto; height: 96px; float: right }
 .tveditform .formtabpage select, .tveditform .formtabpage input { width: 300px }
+.tveditform .formtabpage input[type="button"] { width: 100px; margin-left: -1px; }
 .tveditform .formtabpage select { height: 28px; width: 308px }
 .tveditform .formtabpage textarea { width: 306px }
 .tveditform .formtabpage input.DatePicker { width: 203px; padding: 3px 3px 3px 24px }
 .tveditform .formtabradio { display: inline-block; zoom: 1; color: #313131; font-weight: normal; font-size: 12px; cursor: pointer; margin: 3px 5px 3px 0; padding: 0 }
 .tveditform .formtabradio input { display: inline-block; margin-right: 5px; position: relative; top: -1px }
 .tveditform .formtabradio a { text-decoration: none; color: #313131 }
-.tveditform .actionButtons { margin-bottom: 5px; min-height: 25px }
+.tveditform .actionButtons { margin-top: 5px; margin-bottom: 10px; padding-left: 10px; min-height: 25px }
+.tveditform .actionButtons li { float: none; display: inline-block; margin-right: 2px; }
 
 #ui-datepicker-div { z-index: 9999999 !important;}
 
