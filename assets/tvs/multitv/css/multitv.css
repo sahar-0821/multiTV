@@ -79,22 +79,22 @@
 .multitv .dataTables_wrapper .dataTables_filter input { margin-right: 0 }
 .multitv .dataTables_wrapper .actionButtons { margin-bottom: 9px }
 .multitv .dataTables_wrapper .actionButtons a.disabled { color:#aaa; border: 1px solid #c7ced2; }
-.multitv table.display { width: 100%; background-color: #fff; border: 1px solid silver; border-collapse: separate; border-spacing: 0; table-layout: fixed }
-.multitv table.display thead { color: #333; height: 18px !important; background-color: #e4e4e4 }
-.multitv table.display tr.odd { background-color: #eee }
-.multitv table.display tr.even { background-color: #fff }
-.multitv table.display tr.odd td.sorting_1 { background-color: #e7e7e7 }
-.multitv table.display tr.odd td.sorting_2 { background-color: #eaeaea }
-.multitv table.display tr.odd td.sorting_3 { background-color: #ededed }
-.multitv table.display tr.even td.sorting_1 { background-color: #f7f7f7 }
-.multitv table.display tr.even td.sorting_2 { background-color: #fafafa }
-.multitv table.display tr.even td.sorting_3 { background-color: #fefefe }
-.multitv table.display th { border: 1px solid #fff; color: #fff; font-weight: bold; background-color: #88939e }
-.multitv table.display tr.even > td, .multitv table.display tr.odd > td { border: 1px solid #fff; border-top: none }
-.multitv table.display tr.even > td:first-child, .multitv table.display tr.odd > td:first-child, .multitv table.display tr > th:first-child { border-right: none }
+.multitv table.display { width: 100%; background-color: #fff; border: 1px solid #E0E0E0; border-collapse: separate; border-spacing: 0; table-layout: fixed; margin-bottom: 0.5rem; }
+.multitv table.display thead { color: #333; background-color: #fff }
+.multitv table.display tr.odd, .multitv table.display tr.even { background-color: #fff; transition-duration: .1s; }
+.multitv table.display tr.odd:hover, .multitv table.display tr.even:hover { background-color: rgba(0,0,0,0.03); }
+.multitv table.display tr.odd td.sorting_1 { background-color: #fff }
+.multitv table.display tr.odd td.sorting_2 { background-color: #fff }
+.multitv table.display tr.odd td.sorting_3 { background-color: #fff }
+.multitv table.display tr.even td.sorting_1 { background-color: #fff }
+.multitv table.display tr.even td.sorting_2 { background-color: #fff }
+.multitv table.display tr.even td.sorting_3 { background-color: #fff }
+.multitv table.display th { border: 0 none; color: #777; font-weight: normal; text-transform: uppercase; background-color: #f9f9f9 }
+.multitv table.display tr.even > td, .multitv table.display tr.odd > td { border-top: 1px solid #eceeef; }
+.multitv table.display td strong, .multitv table.display td b { font-weight: normal; }
 .multitv table.display td.handle { background: url('images/arrow_updown.png') no-repeat center center; text-indent: -999em; cursor: pointer }
 .multitv table.display th, .multitv table.display td { text-overflow: ellipsis; overflow:hidden }
-.multitv table.display tr.row_selected td { background-color: #ccc !important }
+.multitv table.display tr.row_selected td { background-color: #efefef !important }
 .multitv table.display.hideHeader thead { font-size: 0; color: transparent; background-color: transparent }
 .multitv table.display.hideHeader thead th { padding: 0 18px 0 10px; border-bottom: none }
 
