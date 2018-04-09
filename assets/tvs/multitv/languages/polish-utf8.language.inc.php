@@ -1,13 +1,13 @@
 <?php
 $language['editSwitch'] = 'Zawartość odziedziczona z dokumentu-rodzica, albo usunięta. Kliknij <a href="#">tu</a>, aby edytować.';
 $language['clear'] = 'Usuń wszystko';
-$language['confirmclear'] = 'Na pewno usunąć wszystko?';
+$language['confirmclear'] = 'Na pewno chesz wszystko usunąć?';
 $language['paste'] = 'Wklej tabelę (np. HTML, Word, CSV)';
 $language['pastehere'] = 'Wklej tu:';
 $language['add'] = 'Dodaj';
 $language['remove'] = 'Usuń';
 $language['edit'] = 'Edytuj';
-$language['duplicate'] = 'Duplicate';
+$language['duplicate'] = 'Kopiuj';
 $language['save'] = 'Zapisz';
 $language['replace'] = 'Zastąp';
 $language['append'] = 'Dodaj';
@@ -42,7 +42,7 @@ $language['dataTables.search'] = 'Szukaj:';
 $language['dataTables.zeroRecords'] = 'Brak pasujących wpisów';
 $language['dataTables.paginate.first'] = 'Początek';
 $language['dataTables.paginate.last'] = 'Koniec';
-$language['dataTables.paginate.next'] = 'Następny';
+$language['dataTables.paginate.next'] = 'Następne';
 $language['dataTables.paginate.previous'] = 'Poprzednie';
 $language['dataTables.aria.sortAscending'] = ': aktywuj, by posortować kolumnę rosnąco';
 $language['dataTables.aria.sortDescending'] = ': aktywuj, by posortować kolumnę malejąco';
