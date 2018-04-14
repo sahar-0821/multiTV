@@ -678,10 +678,10 @@
         this.fieldPaste = $('#' + this.tvid + 'paste');
         this.fieldEditForm = $('#' + this.tvid + 'editform');
         this.fieldEditArea = $('#' + this.tvid + 'editarea');
-        this.tableAppend = '<img alt="' + this.options.language.append + ' " src="../' + this.options.mtvpath + 'css/images/add.png" /> ' + this.options.language.append;
-        this.tableEdit = '<img alt="' + this.options.language.edit + ' " src="../' + this.options.mtvpath + 'css/images/application_form_edit.png" /> ' + this.options.language.edit;
-        this.tableRemove = '<img alt="' + this.options.language.remove + ' " src="../' + this.options.mtvpath + 'css/images/delete.png" /> ' + this.options.language.remove;
-        this.tableDuplicate = '<img alt="' + this.options.language.duplicate + ' " src="../' + this.options.mtvpath + 'css/images/copy.gif" /> ' + this.options.language.duplicate;
+		this.tableAppend    = '<span class="fa fa-fw fa-plus"></span> '  + this.options.language.append;
+		this.tableEdit      = '<span class="fa fa-fw fa-edit"></span> '  + this.options.language.edit;
+		this.tableRemove    = '<span class="fa fa-fw fa-trash"></span> ' + this.options.language.remove;
+		this.tableDuplicate = '<span class="fa fa-fw fa-clone"></span> ' + this.options.language.duplicate;
         this.tableButtons = $('<ul>').addClass('actionButtons');
         this.tableButtonAppend = $('<li>').attr('id', this.tvid + 'tableAppend').append($('<a>').attr('href', '#').html(this.tableAppend));
         this.tableButtonEdit = $('<li>').attr('id', this.tvid + 'tableEdit').append($('<a>').attr('href', '#').addClass('disabled').html(this.tableEdit));
