@@ -37,6 +37,7 @@
 .multitv .list li.element .mtvThumb.inline { float: left; margin-right: 5px; width: 26px }
 .multitv .list li.element .mtvThumb.inline img { position: absolute; width: 26px; height: 26px; z-index: 1 }
 .multitv .list li.element .mtvThumb.inline img:hover { width: auto; height: auto; z-index: 2 }
+.multitv .list li.element .help-block { display: block; line-height: 1.2em;font-size: 11px;color: #999;}
 
 .multitv .hidden { display: none }
 
