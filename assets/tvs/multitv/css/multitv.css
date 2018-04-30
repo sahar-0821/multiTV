@@ -20,8 +20,8 @@
 .multitv .list li.element .mtv_listbox,.multitv .list li.element .mtv_checkbox,
 .multitv .list li.element .mtv_dropdown,
 .multitv .list li.element .mtv_listbox-multiple {margin: 0 3px 5px 0; background-color: #FBFBFB!important;border-color: #dbdbdb!important;} 
-.multitv .list li.element a.copy, .multitv .list li.element a.remove { position: absolute; right: 22px; top: 7px; /*background: url('images/add.png') no-repeat left center;*/ color: #449d44; display: block; width: 16px; height: 16px;  padding: 0 }
-.multitv .list li.element a.remove { right: 4px; /*background-image: url('images/delete.png')*/color: #c9302c;}
+.multitv .list li.element a.copy, .multitv .list li.element a.remove { position: absolute; right: 25px; top: -12px !important; font-size: 1rem; color: #449d44; display: block; width: 16px; height: 16px;  padding: 0 }
+.multitv .list li.element a.remove { right: 5px; color: #c9302c;}
 .multitv .list li.element table.url { width: 300px; display: inline-block }
 .multitv .list li.element table.url input[type="text"] { width: 221px !important }
 .multitv .list li.element .inline, .multitv .heading .inline { display: block; float: left; width: 300px; /*padding: 2px 6px 3px 3px; */ margin: 0 3px 0 0 }
