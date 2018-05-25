@@ -425,7 +425,7 @@ class multiTV
             }
             $formElement = $formElement . $currentScript[1]; // move the script tag to the end
         }
-        preg_match('/<.*class=\"([^\"]*)/s', $formElement, $currentClass); // get current classes
+        preg_match('/<.*?class=\"([^\"]*)/s', $formElement, $currentClass); // get current classes
         $formElement = preg_replace('/class=\"[^\"]*\"/s', '', $formElement, 1); // remove all classes
         if ($fieldDefault != '') {
             $formElement = preg_replace('/(<\w+)/', '$1 alt="' . $fieldDefault . '"', $formElement, 1); // add alt to first tag (the input)
