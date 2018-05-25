@@ -322,8 +322,8 @@ class PHxParser
                         $output = strrev($output);
                         break;
                     case "wordwrap": // default: 70
-                        $wrapat = intval($modifier_value[$i]) ? intval($modifier_value[$i]) : 70;
-                        $output = preg_replace("~(\b\w+\b)~e", "wordwrap('\\1',\$wrapat,' ',1)", $output);
+			$wrapat = intval($modifier_value[$i]) ? intval($modifier_value[$i]) : 70;
+			$output = preg_replace("~([^\s]{" .$wrapat. "})(?=[^\s])~u","$1 ",$output);
                         break;
                     case "limit": // default: 100
                         $limit = intval($modifier_value[$i]) ? intval($modifier_value[$i]) : 100;
