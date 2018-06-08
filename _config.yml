@@ -16,6 +16,6 @@ pages:
 - Contributors: contributors.md
 - Donate: donate.md
 
-theme: yeti
+theme: jekyll-theme-slate
 
 markdown_extensions: [footnotes,tables]
