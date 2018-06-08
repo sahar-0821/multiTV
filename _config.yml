@@ -2,7 +2,7 @@ site_name: multiTV
 docs_dir: assets/tvs/multitv/docs
 site_dir: _site
 
-repo_url: https://github.com/Jako/multiTV
+repo_url: https://github.com/extras-evolution/multiTV
 
 pages:
 - Home: index.md
