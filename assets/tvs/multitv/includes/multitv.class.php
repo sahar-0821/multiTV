@@ -694,6 +694,8 @@ class multiTV
             $placeholder['edit'] = $this->loadTemplate('edit');
             $placeholder['editform'] = implode("\n", $tvelement);
         } else {
+            $files['scripts'] = array_merge($files['scripts'], $settings['scripts'], $this->configuration['scripts']);
+            $files['css'] = array_merge($files['css'], $settings['css'], $this->configuration['css']);
             $placeholder['data'] = $this->loadTemplate('sortablelist');
             $placeholder['script'] = $this->loadTemplate('sortablelistScript' . $this->cmsinfo['clipper']);
         }
