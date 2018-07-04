@@ -1043,6 +1043,22 @@ class multiTV
                             unset($tvOutput[$tvKey]);
                         }
                     }
+                    break;  
+                case 'IN':
+                    $value = explode(',', $value);
+                    foreach ($tvOutput as $tvKey => $tvOut) {
+                        if (!in_array($tvOut[$fieldname], $value)) {
+                            unset($tvOutput[$tvKey]);
+                        }
+                    }
+                    break;  
+                case 'NOT IN':
+                    $value = explode(',', $value);
+                    foreach ($tvOutput as $tvKey => $tvOut) {
+                        if (in_array($tvOut[$fieldname], $value)) {
+                            unset($tvOutput[$tvKey]);
+                        }
+                    }
                     break;
             }
         }
