@@ -47,6 +47,10 @@ class multiTV
     public $options = array();
     private $modx;
 
+    public $params = [];
+    private $_prepareStore;
+    private $_prepareFunctions;
+    private $_prepareWrapFunctions;
 
     function __construct(&$modx, $options)
     {
@@ -287,6 +291,9 @@ class multiTV
         $this->configuration['editBoxWidth'] = isset($settings['configuration']['editBoxWidth']) ? $settings['configuration']['editBoxWidth'] : '';
         $this->configuration['css'] = (isset($settings['configuration']['css']) && !empty($settings['configuration']['css'])) ? explode(',', $settings['configuration']['css']) : array();
         $this->configuration['scripts'] = (isset($settings['configuration']['scripts']) && !empty($settings['configuration']['scripts'])) ? explode(',', $settings['configuration']['scripts']) : array();
+
+        $this->configuration['prepare'] = isset($settings['prepare']) ? $settings['prepare'] : null;
+        $this->configuration['prepareWrap'] = isset($settings['prepareWrap']) ? $settings['prepareWrap'] : null;
     }
 
     function prepareValue($value)
@@ -1067,6 +1074,8 @@ class multiTV
 
     function displayMultiValue($tvOutput, $params)
     {
+        $this->initializePrepare($params);
+
         // replace masked placeholder tags (for templates that are set directly set in snippet call by @CODE)
         $maskedTags = array('((' => '[+', '))' => '+]');
         $params['outerTpl'] = str_replace(array_keys($maskedTags), array_values($maskedTags), $params['outerTpl']);
@@ -1139,11 +1148,21 @@ class multiTV
                 $i++;
                 continue;
             }
+
+            $value = $this->prepareRow(array_merge([
+                'docid'     => $params['docid'],
+                'iteration' => $iteration,
+                'row'       => [
+                    'number' => $i,
+                    'total'  => $countOutput,
+                ],
+            ], $value));
+
             if (!$params['toJson']) {
                 if ($display == 1) {
                     $classes[] = $params['lastClass'];
                 }
-                if ($iteration % 2) {
+                if ($value['iteration'] % 2) {
                     $classes[] = $params['oddClass'];
                 } else {
                     $classes[] = $params['evenClass'];
@@ -1153,9 +1172,9 @@ class multiTV
                     $fieldname = (is_int($key)) ? $this->fieldnames[$key] : $key;
                     $parser->setPlaceholder($fieldname, $fieldvalue);
                 }
-                $parser->setPlaceholder('iteration', $iteration);
-                $parser->setPlaceholder('row', array('number' => $i, 'class' => implode(' ', $classes), 'total' => $countOutput));
-                $parser->setPlaceholder('docid', $params['docid']);
+                $parser->setPlaceholder('iteration', $value['iteration']);
+                $parser->setPlaceholder('row', array_merge($value['row'], ['class' => implode(' ', $classes)]));
+                $parser->setPlaceholder('docid', $value['docid']);
                 $parser->setTpl($parser->getTemplateChunk($params['rowTpl']));
                 $parser->prepareTemplate();
                 $placeholder = $parser->process();
@@ -1165,6 +1184,9 @@ class multiTV
                 $wrapper[] = $placeholder;
                 $classes = array();
             } else {
+                unset($value['iteration']);
+                unset($value['docid']);
+                unset($value['row']);
                 $wrapper[] = $value;
             }
             $i++;
@@ -1176,11 +1198,20 @@ class multiTV
             $output = '';
         } else {
             if (!$params['toJson']) {
+                $wrap = $this->prepareWrap([
+                    'docid'   => $params['docid'],
+                    'wrapper' => $wrapper,
+                    'rows'    => [
+                        'offset' => $params['offset'],
+                        'total'  => $countOutput,
+                    ],
+                ]);
+
                 // wrap rowTpl output in outerTpl
                 $parser = new newChunkie($this->modx);
-                $parser->setPlaceholder('wrapper', implode($params['outputSeparator'], $wrapper));
-                $parser->setPlaceholder('rows', array('offset' => $params['offset'], 'total' => $countOutput));
-                $parser->setPlaceholder('docid', $params['docid']);
+                $parser->setPlaceholder('wrapper', implode($params['outputSeparator'], $wrap['wrapper']));
+                $parser->setPlaceholder('rows', $wrap['rows']);
+                $parser->setPlaceholder('docid', $wrap['docid']);
                 if ($params['paginate']) {
                     $pagination = new Pagination(array(
                         'per_page' => $limit,
@@ -1247,4 +1278,84 @@ class multiTV
         }
     }
 
+    public function setStore($key, $value)
+    {
+        $this->_prepareStore[$key] = $value;
+    }
+
+    public function getStore($key)
+    {
+        if (isset($this->_prepareStore[$key])) {
+            return $this->_prepareStore[$key];
+        }
+
+        return null;
+    }
+
+    public function initializePrepare($params)
+    {
+        $this->params = $params;
+        $this->_prepareStore = [];
+        $this->_prepareFunctions = [];
+        $this->_prepareWrapFunctions = [];
+
+        foreach (['_prepareFunctions' => 'prepare', '_prepareWrapFunctions' => 'prepareWrap'] as $attribute => $parameter) {
+            $functions = [
+                !empty($this->configuration[$parameter]) ? $this->configuration[$parameter] : [],
+                !empty($params[$parameter]) ? $params[$parameter] : [],
+            ];
+
+            $prepare = [];
+
+            foreach ($functions as $item) {
+                if (is_scalar($item)) {
+                    $prepare = array_merge($prepare, explode(',', $item));
+                } else if ($item instanceof Closure) {
+                    $prepare = array_merge($prepare, [$item]);
+                } else if (is_array($item)) {
+                    $prepare = array_merge($prepare, $item);
+                }
+            }
+
+            $this->{$attribute} = $prepare;
+        }
+    }
+
+    public function doPrepare($functions, $params) {
+        foreach ($functions as $function) {
+            if (is_callable($function)) {
+                $params['data'] = call_user_func_array($function, $params);
+            } else {
+                $params['data'] = $this->modx->runSnippet($function, $params);
+            }
+        }
+
+        return $params['data'];
+    }
+
+    public function prepareRow($data)
+    {
+        if (empty($this->_prepareFunctions)) {
+            return $data;
+        }
+
+        return $this->doPrepare($this->_prepareFunctions, [
+            'data'     => $data,
+            'modx'     => $this->modx,
+            '_multiTV' => $this,
+        ]);
+    }
+
+    public function prepareWrap($data)
+    {
+        if (empty($this->_prepareWrapFunctions)) {
+            return $data;
+        }
+
+        return $this->doPrepare($this->_prepareWrapFunctions, [
+            'data'     => $data,
+            'modx'     => $this->modx,
+            '_multiTV' => $this,
+        ]);
+    }
 }
