@@ -17,8 +17,9 @@
 .multitv .list li.element label { display: inline-block; width: 150px; vertical-align: top }
 .multitv .list li.element select.inline { margin-right: 9px }
 .multitv .list li.element input[type="text"], .multitv .list li.element input[type="password"], .multitv .list li.element input[type="number"], .multitv .list li.element textarea { margin: 0 3px 5px 0; width: calc(100% - 280px) !important; background-color: #FBFBFB!important;border-color: #dbdbdb!important;}
+.multitv .list li.element input[type="text"].mtvImage, .multitv .list li.element input[type="text"].mtvFile { width: calc(100% - 373px) !important; }
 .multitv .list li.element textarea { width: 300px; height: 150px; }
-.multitv .list li.element input.browseimage { max-width: 120px;overflow: hidden;text-overflow: ellipsis; }
+.multitv .list li.element input.browseimage, .multitv .list li.element input.browsefile { width: 90px;overflow: hidden;text-overflow: ellipsis; }
 .multitv .list li.element .mtv_listbox,.multitv .list li.element .mtv_checkbox,
 .multitv .list li.element .mtv_dropdown,
 .multitv .list li.element .mtv_listbox-multiple {margin: 0 3px 5px 0; background-color: #FBFBFB!important;border-color: #dbdbdb!important;} 
