@@ -373,6 +373,11 @@ class multiTV
                     $fieldClass[] = 'mtvImage';
                 }
                 break;
+            case 'file':
+                if ($this->display == 'datatable' || $this->display == 'dbtatable' || $this->display == 'vertical' || $this->display == 'horizontal') {
+                    $fieldClass[] = 'mtvFile';
+                }
+                break;
             case 'richtext' :
                 if ($this->display == 'datatable' || $this->display == 'dbtable' || $this->options['type'] == 'module') {
                     $this->fieldsrte[] = ($this->options['type'] == 'module') ? $fieldName : "tv" . $this->tvID . $fieldName;
