@@ -1085,8 +1085,9 @@ class multiTV
         $maskedTags = array('((' => '[+', '))' => '+]');
         $params['outerTpl'] = str_replace(array_keys($maskedTags), array_values($maskedTags), $params['outerTpl']);
         $params['rowTpl'] = str_replace(array_keys($maskedTags), array_values($maskedTags), $params['rowTpl']);
-
-        $countOutput = count($tvOutput);
+        if(is_array($tvOutput)){ 
+            $countOutput = count($tvOutput);
+        }
         $firstEmpty = true;
         if ($countOutput) {
             // check for first item empty
