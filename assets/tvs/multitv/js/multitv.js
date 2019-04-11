@@ -1051,7 +1051,7 @@
                             _this.data.settings.autoincrement++;
                         }
                     });
-                    _this.editBoxOpen(mode);
+                    _this.editBoxOpen(mode, lineValue);
                 } else {
                     $.ajax({
                         dataType: 'json',
@@ -1095,7 +1095,7 @@
                             _this.data.settings.autoincrement++;
                         }
                     });
-                    _this.editBoxOpen(mode);
+                    _this.editBoxOpen(mode, lineValue);
                 } else {
                     $.ajax({
                         dataType: 'json',
