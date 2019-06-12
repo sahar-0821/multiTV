@@ -1164,6 +1164,9 @@ class multiTV
                 ],
             ], $value));
 
+            if($value == false) continue;
+            
+
             if (!$params['toJson']) {
                 if ($display == 1) {
                     $classes[] = $params['lastClass'];
