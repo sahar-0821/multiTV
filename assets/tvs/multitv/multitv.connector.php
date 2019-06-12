@@ -8,34 +8,20 @@
  * @author      Jako (thomas.jakobi@partout.info)
  */
 $base_path = str_replace($_POST['mtvpath'], '', str_replace('\\', '/', realpath(dirname(__FILE__))) . '/');
-if (is_file($base_path . 'assets/cache/siteManager.php')) {
-    include_once($base_path . 'assets/cache/siteManager.php');
+define('MODX_BASE_PATH', $base_path);
+include_once(MODX_BASE_PATH . "index.php");
+
+$modx->db->connect();
+if (empty ($modx->config)) {
+    $modx->getSettings();
 }
-if (!defined('MGR_DIR') && is_dir($base_path . 'manager')) {
+
+if (is_file(MODX_BASE_PATH . 'assets/cache/siteManager.php')) {
+    include_once(MODX_BASE_PATH . 'assets/cache/siteManager.php');
+}
+if (!defined('MGR_DIR') && is_dir(MODX_BASE_PATH . 'manager')) {
     define('MGR_DIR', 'manager');
 }
-
-// Include the nessesary files
-define('MODX_MANAGER_PATH', $base_path . MGR_DIR . '/');
-require_once(MODX_MANAGER_PATH . 'includes/config.inc.php');
-require_once(MODX_MANAGER_PATH . 'includes/protect.inc.php');
-
-// Setup the MODx API
-define('MODX_API_MODE', true);
-define('IN_MANAGER_MODE', true);
-
-//start session
-startCMSSession();
-
-// initiate a new document parser
-include_once(MODX_MANAGER_PATH . '/includes/document.parser.class.inc.php');
-$modx = new DocumentParser;
-
-// provide the MODx DBAPI
-$modx->db->connect();
-
-// provide the $modx->documentMap and user settings
-$modx->getSettings();
 
 // set customtv (base) path
 define('MTV_PATH', str_replace(MODX_BASE_PATH, '', str_replace('\\', '/', realpath(dirname(__FILE__)))) . '/');
