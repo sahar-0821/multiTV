@@ -110,29 +110,29 @@
                     if (_this.options.mode !== 'single') {
                         _this.fieldList.sortable({
                             start: function (e, ui) {
-                              $(ui.item).find('.inlineTabEditor').each(function () {
-                                 tinymce.execCommand('mceRemoveEditor', false, $(this).attr('id'));
-                              });
+                                $(ui.item).find('.inlineTabEditor').each(function () {
+                                    tinymce.execCommand('mceRemoveEditor', false, $(this).attr('id'));
+                                });
                             },
                             stop: function (e, ui) {
-                              $(ui.item).find('.inlineTabEditor').each(function () {
-                                var editorId = $(this).attr('id');
-                                var theme = $(this).data('theme');
-                                if (tinyMCE.majorVersion == 4) {
-                                    if (modxRTEbridge_tinymce4 != undefined) {
-                                        
-                                        var configObj = theme != undefined ? window['config_tinymce4_'+theme] : window[modxRTEbridge_tinymce4.default];
-                                        configObj['selector'] = '#' + editorId;
-                                        configObj['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
-                                        tinyMCE.init(configObj);
+                                $(ui.item).find('.inlineTabEditor').each(function () {
+                                    var editorId = $(this).attr('id');
+                                    var theme = $(this).data('theme');
+                                    if (tinyMCE.majorVersion == 4) {
+                                        if (modxRTEbridge_tinymce4 != undefined) {
+
+                                            var configObj = theme != undefined ? window['config_tinymce4_'+theme] : window[modxRTEbridge_tinymce4.default];
+                                            configObj['selector'] = '#' + editorId;
+                                            configObj['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
+                                            tinyMCE.init(configObj);
+                                        } else {
+                                            tinyMCE.execCommand('mceAddEditor', false, editorId);
+                                        }
                                     } else {
-                                        tinyMCE.execCommand('mceAddEditor', false, editorId);
+                                        tinyMCE.execCommand('mceAddControl', false, editorId);
                                     }
-                                } else {
-                                    tinyMCE.execCommand('mceAddControl', false, editorId);
-                                }
-                              });
-                               _this.saveMultiValue();
+                                });
+                                _this.saveMultiValue();
                             },
                             axis: 'y',
                             helper: 'clone'
@@ -272,16 +272,16 @@
 
             //color
             $('.jscolor', el).ColorPicker({
-                    onSubmit: function(hsb, hex, rgb, el) {
-                        _this.updateColor($(el), hex, true);
-                    },
-                    onChange: function(hsb, hex, rgb) {
-                        _this.updateColor($(this.data('colorpicker').el), hex);
-                    },
-                    onBeforeShow: function () {
-                        $(this).ColorPickerSetColor(this.value);
-                    }
-                })
+                onSubmit: function(hsb, hex, rgb, el) {
+                    _this.updateColor($(el), hex, true);
+                },
+                onChange: function(hsb, hex, rgb) {
+                    _this.updateColor($(this.data('colorpicker').el), hex);
+                },
+                onBeforeShow: function () {
+                    $(this).ColorPickerSetColor(this.value);
+                }
+            })
                 .bind('keyup', function(){
                     $(this).ColorPickerSetColor(this.value);
                 });
@@ -351,7 +351,7 @@
                     }));
                 }
             });
-            
+
 
             // change field
             $('[name]', el).bind('change keyup', function (e) {
@@ -366,10 +366,19 @@
             var thumbName = thumbPath.pop();
             var thumbId = name.replace(/^(.*?)(\d*)$/, '#$1preview$2');
             if (thumbName !== '') {
+                var lastFour = thumbName.substr(thumbName.length - 4).toLowerCase();
                 if (_this.options.kcfinder) {
-                    $(thumbId, el).html('<img src="../' + (thumbPath.join('/') + '/').replace('/images/', '/' + _this.options.thumbs + 'images/') + thumbName + '" />');
+                    if(lastFour == '.svg') {
+                        $(thumbId, el).html('<img src="../' + (thumbPath.join('/') + '/') + thumbName + '" />');
+                    }else {
+                        $(thumbId, el).html('<img src="../' + (thumbPath.join('/') + '/').replace('/images/', '/' + _this.options.thumbs + 'images/') + thumbName + '" />');
+                    }
                 } else {
-                    $(thumbId, el).html('<img src="../' + thumbPath.join('/') + '/.thumb_' + thumbName + '" />');
+                    if(lastFour == '.svg') {
+                        $(thumbId, el).html('<img src="../' + (thumbPath.join('/') + '/') + thumbName + '" />');
+                    }else {
+                        $(thumbId, el).html('<img src="../' + thumbPath.join('/') + '/.thumb_' + thumbName + '" />');
+                    }
                 }
             } else {
                 $(thumbId, el).html('');
@@ -489,29 +498,29 @@
             // sortable
             this.fieldList.sortable({
                 start: function (e, ui) {
-                  $(ui.item).find('.inlineTabEditor').each(function () {
-                     tinymce.execCommand('mceRemoveEditor', false, $(this).attr('id'));
-                  });
+                    $(ui.item).find('.inlineTabEditor').each(function () {
+                        tinymce.execCommand('mceRemoveEditor', false, $(this).attr('id'));
+                    });
                 },
                 stop: function (e, ui) {
-                  $(ui.item).find('.inlineTabEditor').each(function () {
-                     var editorId = $(this).attr('id');
-                    var theme = $(this).data('theme');
-                    if (tinyMCE.majorVersion == 4) {
-                        if (modxRTEbridge_tinymce4 != undefined) {
-                            
-                            var configObj = theme != undefined ? window['config_tinymce4_'+theme] : window[modxRTEbridge_tinymce4.default];
-                            configObj['selector'] = '#' + editorId;
-                            configObj['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
-                            tinyMCE.init(configObj);
+                    $(ui.item).find('.inlineTabEditor').each(function () {
+                        var editorId = $(this).attr('id');
+                        var theme = $(this).data('theme');
+                        if (tinyMCE.majorVersion == 4) {
+                            if (modxRTEbridge_tinymce4 != undefined) {
+
+                                var configObj = theme != undefined ? window['config_tinymce4_'+theme] : window[modxRTEbridge_tinymce4.default];
+                                configObj['selector'] = '#' + editorId;
+                                configObj['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
+                                tinyMCE.init(configObj);
+                            } else {
+                                tinyMCE.execCommand('mceAddEditor', false, editorId);
+                            }
                         } else {
-                            tinyMCE.execCommand('mceAddEditor', false, editorId);
+                            tinyMCE.execCommand('mceAddControl', false, editorId);
                         }
-                    } else {
-                        tinyMCE.execCommand('mceAddControl', false, editorId);
-                    }
-                  });
-                   this.saveMultiValue();
+                    });
+                    this.saveMultiValue();
                 },
                 axis: 'y',
                 helper: 'clone'
@@ -678,10 +687,10 @@
         this.fieldPaste = $('#' + this.tvid + 'paste');
         this.fieldEditForm = $('#' + this.tvid + 'editform');
         this.fieldEditArea = $('#' + this.tvid + 'editarea');
-		this.tableAppend    = '<span class="fa fa-fw fa-plus"></span> '  + this.options.language.append;
-		this.tableEdit      = '<span class="fa fa-fw fa-edit"></span> '  + this.options.language.edit;
-		this.tableRemove    = '<span class="fa fa-fw fa-trash"></span> ' + this.options.language.remove;
-		this.tableDuplicate = '<span class="fa fa-fw fa-clone"></span> ' + this.options.language.duplicate;
+        this.tableAppend    = '<span class="fa fa-fw fa-plus"></span> '  + this.options.language.append;
+        this.tableEdit      = '<span class="fa fa-fw fa-edit"></span> '  + this.options.language.edit;
+        this.tableRemove    = '<span class="fa fa-fw fa-trash"></span> ' + this.options.language.remove;
+        this.tableDuplicate = '<span class="fa fa-fw fa-clone"></span> ' + this.options.language.duplicate;
         this.tableButtons = $('<ul>').addClass('actionButtons');
         this.tableButtonAppend = $('<li>').attr('id', this.tvid + 'tableAppend').append($('<a>').attr('href', '#').html(this.tableAppend));
         this.tableButtonEdit = $('<li>').attr('id', this.tvid + 'tableEdit').append($('<a>').attr('href', '#').addClass('disabled').html(this.tableEdit));
@@ -956,10 +965,19 @@
             var thumbName = thumbPath.pop();
             var thumbId = name.replace(/^(.*?)(\d*)$/, '#$1preview$2');
             if (thumbName !== '') {
+                var lastFour = thumbName.substr(thumbName.length - 4).toLowerCase();
                 if (_this.options.kcfinder) {
-                    $(thumbId, el).html('<img src="../' + (thumbPath.join('/') + '/').replace('/images/', '/' + _this.options.thumbs + 'images/') + thumbName + '" />');
+                    if(lastFour == '.svg') {
+                        $(thumbId, el).html('<img src="../' + (thumbPath.join('/') + '/') + thumbName + '" />');
+                    }else {
+                        $(thumbId, el).html('<img src="../' + (thumbPath.join('/') + '/').replace('/images/', '/' + _this.options.thumbs + 'images/') + thumbName + '" />');
+                    }
                 } else {
-                    $(thumbId, el).html('<img src="../' + thumbPath.join('/') + '/.thumb_' + thumbName + '" />');
+                    if(lastFour == '.svg') {
+                        $(thumbId, el).html('<img src="../' + (thumbPath.join('/') + '/') + thumbName + '" />');
+                    }else {
+                        $(thumbId, el).html('<img src="../' + thumbPath.join('/') + '/.thumb_' + thumbName + '" />');
+                    }
                 }
             } else {
                 $(thumbId, el).html('');
@@ -998,19 +1016,19 @@
                 BrowseFileServer(field);
                 return false;
             });
-            
+
             //color
             $('.jscolor', el).ColorPicker({
-                    onSubmit: function(hsb, hex, rgb, el) {
-                        _this.updateColor($(el), hex, true);
-                    },
-                    onChange: function(hsb, hex, rgb) {
-                        _this.updateColor($(this.data('colorpicker').el), hex);
-                    },
-                    onBeforeShow: function () {
-                        $(this).ColorPickerSetColor(this.value);
-                    }
-                })
+                onSubmit: function(hsb, hex, rgb, el) {
+                    _this.updateColor($(el), hex, true);
+                },
+                onChange: function(hsb, hex, rgb) {
+                    _this.updateColor($(this.data('colorpicker').el), hex);
+                },
+                onBeforeShow: function () {
+                    $(this).ColorPickerSetColor(this.value);
+                }
+            })
                 .bind('keyup', function(){
                     $(this).ColorPickerSetColor(this.value);
                 });
