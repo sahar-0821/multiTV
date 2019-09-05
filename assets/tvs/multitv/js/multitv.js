@@ -451,9 +451,13 @@
                         if (modxRTEbridge_tinymce4 != undefined) {
 
                             var configObj = theme != undefined ? window['config_tinymce4_'+theme] : window[modxRTEbridge_tinymce4.default];
-                            configObj['selector'] = '#' + editorId;
-                            configObj['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
-                            tinyMCE.init(configObj);
+                            var newConfig = {};
+                            for (var key in configObj) {
+                                newConfig[key] = configObj[key];
+                            }
+                            newConfig['selector'] = '#' + editorId;
+                            newConfig['setup'] = function(ed) { ed.on("change", function(e) { documentDirty=true; tinymce.triggerSave(); jQuery('#'+_this.tvid).transformField("saveMultiValue"); }); };
+                            tinyMCE.init(newConfig);
                         } else {
                             tinyMCE.execCommand('mceAddEditor', false, editorId);
                         }
