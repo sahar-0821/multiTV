@@ -8,6 +8,7 @@
  * @author      Jako (thomas.jakobi@partout.info)
  */
 $base_path = str_replace($_POST['mtvpath'], '', str_replace('\\', '/', realpath(dirname(__FILE__))) . '/');
+define('MODX_API_MODE', true);
 define('MODX_BASE_PATH', $base_path);
 include_once(MODX_BASE_PATH . "index.php");
 
