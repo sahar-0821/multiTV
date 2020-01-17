@@ -33,7 +33,7 @@
 .multitv .list li.element .inlinelabel { width: auto }
 .multitv .list li.element .DatePicker { padding: 3px 3px 3px 24px }
 .multitv .list li.element .mtvThumb { float: right; margin-right: 12px; }
-.multitv .list li.element .mtvThumb img { width: auto; max-height: 96px; min-height:50px; float: right }
+.multitv .list li.element .mtvThumb img { max-width: 96px; max-height: 96px; height:auto; width:auto; min-height:50px; min-width:50px; float: right }
 .multitv .list li.element .thumb { border: 1px solid #ccc !important }
 .multitv .list li.element .mtvThumb.inline { float: left; margin-right: 5px; width: 26px }
 .multitv .list li.element .mtvThumb.inline img { position: absolute; width: 26px; height: 26px; z-index: 1 }
