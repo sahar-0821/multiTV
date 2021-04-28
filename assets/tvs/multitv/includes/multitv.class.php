@@ -449,7 +449,8 @@ class multiTV
         $fieldClass = implode(' ', array_unique($fieldClass));
         $formElement = preg_replace('/(<\w+)/', '$1 class="' . $fieldClass . '"', $formElement, 1); // add class to first tag (the input)
         $formElement = preg_replace('/<label for=[^>]*>([^<]*)<\/label>/s', '<label class="inlinelabel">$1</label>', $formElement); // add label class
-        $formElement = preg_replace('/(onclick="BrowseServer[^\"]+\")/', 'class="browseimage ' . $fieldClass . '"', $formElement, 1); // remove imagebrowser onclick script
+        $formElement = preg_replace('/(onclick="BrowseServer[^\"]+\")/', 'class="browseimage ' . $fieldClass . '"', $formElement); // remove imagebrowser onclick script
+        $formElement = str_replace('<script>document.getElementById(\'tv0\').addEventListener(\'change\', evoRenderTvImageCheck, false);</script>', '', $formElement); // remove imagebrowser onclick script
         $formElement = preg_replace('/(onclick="BrowseFileServer[^\"]+\")/', 'class="browsefile ' . $fieldClass . '"', $formElement, 1); // remove filebrowser onclick script
         $formElement = str_replace('document.forms[\'mutate\'].elements[\'tv0\'].value=\'\';document.forms[\'mutate\'].elements[\'tv0\'].onblur(); return true;', '$j(this).prev(\'input\').val(\'\').trigger(\'change\');', $formElement); // change datepicker onclick script
         $formElement = preg_replace('/(<script.*?DatePicker.*?script>)/s', '', $formElement); // remove datepicker script
