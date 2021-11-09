@@ -1086,7 +1086,9 @@ class multiTV
         $maskedTags = array('((' => '[+', '))' => '+]');
         $params['outerTpl'] = str_replace(array_keys($maskedTags), array_values($maskedTags), $params['outerTpl']);
         $params['rowTpl'] = str_replace(array_keys($maskedTags), array_values($maskedTags), $params['rowTpl']);
-        if(is_array($tvOutput)){ 
+        $params['rowTplAlt'] = str_replace(array_keys($maskedTags), array_values($maskedTags), $params['rowTplAlt']);
+        $params['rowTplFirst'] = str_replace(array_keys($maskedTags), array_values($maskedTags), $params['rowTplFirst']);
+        if(is_array($tvOutput)){
             $countOutput = count($tvOutput);
         }
         $firstEmpty = true;
@@ -1141,6 +1143,7 @@ class multiTV
         $classes = array($params['firstClass']);
         // rowTpl output
         foreach ($tvOutput as $value) {
+
             if ($display == 0) {
                 break;
             }
@@ -1166,17 +1169,15 @@ class multiTV
             ], $value));
 
             if($value == false) continue;
-            
+
 
             if (!$params['toJson']) {
                 if ($display == 1) {
                     $classes[] = $params['lastClass'];
                 }
-                if ($value['iteration'] % 2) {
-                    $classes[] = $params['oddClass'];
-                } else {
-                    $classes[] = $params['evenClass'];
-                }
+                $classes[]= ($value['iteration'] % 2) ? $params['oddClass'] : $params['evenClass'];
+                $tpl = ($value['iteration'] % 2) ? $params['rowTpl'] : $params['rowTplAlt'];
+                $tpl = ($value['iteration'] == 1) ? $params['rowTplFirst'] : $tpl;
                 $parser = new newChunkie($this->modx);
                 foreach ($value as $key => $fieldvalue) {
                     $fieldname = (is_int($key)) ? $this->fieldnames[$key] : $key;
@@ -1185,7 +1186,7 @@ class multiTV
                 $parser->setPlaceholder('iteration', $value['iteration']);
                 $parser->setPlaceholder('row', array_merge($value['row'], ['class' => implode(' ', $classes)]));
                 $parser->setPlaceholder('docid', $value['docid']);
-                $parser->setTpl($parser->getTemplateChunk($params['rowTpl']));
+                $parser->setTpl($parser->getTemplateChunk($tpl));
                 $parser->prepareTemplate();
                 $placeholder = $parser->process();
                 if ($params['toPlaceholder']) {
