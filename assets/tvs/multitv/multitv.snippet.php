@@ -61,6 +61,9 @@ $params['outerTpl'] = (isset($outerTpl)) ? $outerTpl : (isset($templates['outerT
 $params['emptyOutput'] = (isset($emptyOutput) && !$emptyOutput) ? false : true;
 $params['noResults'] = (isset($noResults)) ? $noResults : '';
 $params['rowTpl'] = (isset($rowTpl)) ? $rowTpl : (isset($templates['rowTpl']) ? '@CODE:' . $templates['rowTpl'] : '@CODE:<option value="[+value+]">[+key+]</option>');
+
+$params['rowTplFirst'] = (isset($rowTpl)) ? $rowTpl : (isset($templates['rowTplFirst']) ? '@CODE:' . $templates['rowTplFirst'] : '@CODE:<option value="[+value+]">[+key+]</option>');
+$params['rowTplAlt'] = (isset($rowTpl)) ? $rowTpl : (isset($templates['rowTplAlt']) ? '@CODE:' . $templates['rowTplAlt'] : '@CODE:<option value="[+value+]">[+key+]</option>');
 $params['display'] = (isset($display)) ? $display : 5;
 $params['offset'] = (isset($offset)) ? (int)$offset : 0;
 $params['rows'] = (isset($rows) && ($rows != 'all')) ? explode(',', $rows) : 'all';
